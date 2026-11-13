@@ -1,11 +1,12 @@
 package me.alfie.immersiveenchanting.gui.tab.enchanting.tooltip;
 
-import me.alfie.alfinolib.gui.util.GuiGraphicsApi;
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.GuiGraphicsApi;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.config.ClientConfig;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.CostRegistry;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.codec.Cost;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.codec.CostHolder;
+import me.alfie.immersiveenchanting.util.CostHelper;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -39,6 +40,15 @@ public class CostRenderer {
         this.renderedCosts = getRenderedCosts(holder);
 
         fuelHolder = costRegistry.get(CostRegistry.ENCHANTING_FUELS).levelCosts().getLevel(level);
+
+        // fork: a cost with fuel_count shows that many of the fuel item (e.g. 10 lapis to go Supreme)
+        int fuelCount = holder.costs().isEmpty() ? 0 : holder.costs().get(0).fuelCount();
+        if(fuelCount > 0) {
+            List<Cost> fuels = fuelHolder.costs().isEmpty()
+                    ? costRegistry.get(CostRegistry.ENCHANTING_FUELS).levelCosts().getLevel(1).costs()
+                    : fuelHolder.costs();
+            fuelHolder = new CostHolder(CostHelper.overrideCount(fuels, fuelCount));
+        }
         this.renderedFuelCosts = getRenderedCosts(fuelHolder);
     }
 

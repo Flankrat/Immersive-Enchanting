@@ -99,7 +99,7 @@ dependencies {
     //Set to implementation instead of compileOnly in Dev environment.
     //implementation fg.deobf("curse.maven:domestication-innovation-591149:4911955")
     //implementation fg.deobf("curse.maven:citadel-331936:7476570")
-    compileOnly fg.deobf("curse.maven:alfinolib-1554698:8596077") //1.2.0
+    // fork: AlfinoLib 1.2.0 is built in (src/main/java/me/alfie/immersiveenchanting/alfinolib), no dependency needed
 }
 
 mixin {
@@ -113,6 +113,8 @@ mixin {
 // When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
 // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
 tasks.named('processResources', ProcessResources).configure {
+    // fork: ship the GPLv3 text inside the jar, as the license asks
+    from('LICENSE')
     var replaceProperties = [
             minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
             forge_version: forge_version, forge_version_range: forge_version_range,

@@ -1,0 +1,37 @@
+package me.alfie.immersiveenchanting.alfinolib.datapacks;
+
+import com.mojang.logging.LogUtils;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.client.ClientDatapackManager;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.server.ServerDatapackManager;
+import me.alfie.immersiveenchanting.alfinolib.networking.NetworkRegisterEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
+import me.alfie.immersiveenchanting.alfinolib.networking.Networking;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.slf4j.Logger;
+
+public final class Datapacks {
+
+    public static final Logger LOGGER = LogUtils.getLogger();
+
+    //Setup
+
+    /**
+     * Fired when the mod loads - internal use only.
+     * @param modEventBus
+     */
+    public static void init(IEventBus modEventBus) {
+        MinecraftForge.EVENT_BUS.addListener(ServerDatapackManager::onServerStart);
+        MinecraftForge.EVENT_BUS.addListener(ServerDatapackManager::onServerFinished);
+        MinecraftForge.EVENT_BUS.addListener(ServerDatapackManager::onServerReload);
+        MinecraftForge.EVENT_BUS.addListener(ServerDatapackManager::onServerStop);
+
+
+        if (FMLEnvironment.dist.isClient()) {
+            MinecraftForge.EVENT_BUS.addListener(ClientDatapackManager::onServerLeave);
+        }
+
+        modEventBus.addListener(SyncClientDatapackPacket::register);
+    }
+
+}

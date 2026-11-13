@@ -1,9 +1,9 @@
 package me.alfie.immersiveenchanting.gui.tab.enchanting.node;
 
 import com.mojang.blaze3d.platform.NativeImage;
-import me.alfie.alfinolib.gui.GuiGraphicsX;
-import me.alfie.alfinolib.gui.util.MousePos;
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.gui.canvas.Canvas;
 import me.alfie.immersiveenchanting.gui.canvas.CanvasRenderable;

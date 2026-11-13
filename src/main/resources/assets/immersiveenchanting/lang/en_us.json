@@ -17,6 +17,9 @@
   "immersiveenchanting.tooltip.desc.xp_levels": "Levels: ",
   "immersiveenchanting.tooltip.desc.equipped": "Equipped.",
   "immersiveenchanting.tooltip.desc.unavailable_enchantment": "Unknown",
+  "immersiveenchanting.tooltip.desc.bookshelf_power": "Needs %s bookshelf power (has %s)",
+  "immersiveenchanting.config.bookshelf_power_per_tier": "Bookshelf Power Per Tier",
+  "immersiveenchanting.config.chiseled_bookshelf_power": "Chiseled Bookshelf Power",
 
   "immersiveenchanting.tooltip.desc.replicate": "Make a copy of this Ancient Book.",
   "immersiveenchanting.tooltip.desc.transmute": "Change the enchantment for this Ancient Book.",

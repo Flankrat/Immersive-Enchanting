@@ -1,8 +1,8 @@
 package me.alfie.immersiveenchanting.gui.tab.enchanting.tooltip;
 
-import me.alfie.alfinolib.gui.GuiGraphicsX;
-import me.alfie.alfinolib.gui.util.GuiGraphicsApi;
-import me.alfie.alfinolib.gui.util.MousePos;
+import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.GuiGraphicsApi;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
 import me.alfie.immersiveenchanting.api.description.DescriptionLayout;
 import me.alfie.immersiveenchanting.api.description.TooltipDescriptionExtensions;
 import me.alfie.immersiveenchanting.gui.core.NineSliceSprite;

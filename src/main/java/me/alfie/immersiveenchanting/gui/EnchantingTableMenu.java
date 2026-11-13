@@ -71,6 +71,17 @@ public class EnchantingTableMenu extends AbstractContainerMenu {
 
     private List<Holder<Enchantment>> availableEnchantments = new ArrayList<>();
 
+    /** Fork: bookshelf power around the table as last sent by the server (client side), for the tier requirement. */
+    private int bookshelfPower = 0;
+
+    public void setBookshelfPower(int bookshelfPower) {
+        this.bookshelfPower = bookshelfPower;
+    }
+
+    public int getBookshelfPower() {
+        return bookshelfPower;
+    }
+
     /**
      * Client-side constructor used when the menu is opened.
      *

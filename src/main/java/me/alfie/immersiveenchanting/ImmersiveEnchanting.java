@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting;
 
 import com.mojang.logging.LogUtils;
-import me.alfie.alfinolib.datapacks.DatapackRegistry;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.DatapackRegistry;
 import me.alfie.immersiveenchanting.block.ModBlocks;
 import me.alfie.immersiveenchanting.config.ClientConfig;
 import me.alfie.immersiveenchanting.config.ServerConfig;
@@ -38,6 +38,9 @@ public class ImmersiveEnchanting {
 
     public ImmersiveEnchanting(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
+
+        // fork: AlfinoLib is built in now, so start it first, as its own mod constructor used to
+        me.alfie.immersiveenchanting.alfinolib.AlfinoLib.init(modEventBus);
 
         ModEvents.register(modEventBus);
         ModMenus.register(modEventBus);

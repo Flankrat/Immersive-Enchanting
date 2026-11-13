@@ -1,8 +1,8 @@
 package me.alfie.immersiveenchanting.api.description;
 
-import me.alfie.alfinolib.gui.GuiGraphicsX;
-import me.alfie.alfinolib.gui.util.GuiGraphicsApi;
-import me.alfie.alfinolib.gui.util.MousePos;
+import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.GuiGraphicsApi;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
 import me.alfie.immersiveenchanting.api.description.internal.lines.FuelsLine;
 import me.alfie.immersiveenchanting.api.description.internal.lines.LevelsLine;
 import me.alfie.immersiveenchanting.api.description.internal.lines.MaterialsLine;

@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting.networking;
 
-import me.alfie.alfinolib.networking.NetworkPacket;
-import me.alfie.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.networking.NetworkPacket;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.gui.EnchantingTableMenu;
 import me.alfie.immersiveenchanting.util.CostHelper;
