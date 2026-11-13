@@ -71,7 +71,7 @@ public class RemoveEnchantedBooksModifier extends LootModifier {
         } else if(ServerConfig.isEnchantedBookLootMode(ServerConfig.EnchantedBookLootMode.REMOVE)) {
             generatedLoot.removeIf(stack -> stack.is(Items.ENCHANTED_BOOK));
         }
-        // fork: KEEP falls through and leaves the loot as it is
+        // fork: NOTHING falls through and leaves the loot as it is
 
 
         return generatedLoot;
