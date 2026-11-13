@@ -1,8 +1,29 @@
 # Immersive Enchanting, RLCraft fork
 
 A fork of [Immersive Enchanting](https://github.com/alfiehanks/Immersive-Enchanting) 6.0.1 (branch `forge-1.20.1`) by
-alfino (alfiehanks), for the RLCraft 1.20.1 port. Version `6.0.1-rlcraft.1`. Every change is marked with a `fork`
-comment in the code.
+alfino (alfiehanks), made for the RLCraft port to Minecraft 1.20.1 (Forge 47.x). Version `6.0.1-rlcraft.1`.
+Every change from the original is marked with a `fork` comment in the code.
+
+## What's different from the original
+
+| | Original IE 6.0.1 | This fork |
+|---|---|---|
+| Tier upgrades (Sharpness V → Advanced Sharpness I → Supreme) | Not supported; one branch per enchantment, no way to turn one enchantment into another | Cost files can say `"upgrades_from"`; the next tier shows up once the previous one is maxed and replaces it ([details](#tier-upgrades)) |
+| Bookshelf power | Not used; only chiseled bookshelves with Ancient Books matter | Each tier needs more bookshelf power around the table, default 15 / 30 / 45; bookshelves and chiseled bookshelves both count ([details](#bookshelf-power)) |
+| Fuel per level | Always the `enchanting_fuels` amount for that level | A cost can set `fuel_count` for a flat amount, e.g. 5 lapis to go Advanced ([details](#fuel-override)) |
+| AlfinoLib | Separate required mod | Built in, so one jar ([details](#alfinolib-built-in)) |
+| Enchanted books in loot | `REPLACE` (with Ancient Books) or `REMOVE` | Also `KEEP`, which leaves them alone like 5.x could ([details](#enchanted-book-loot)) |
+| Cost alternatives | Only the last alternative of a level was accepted | The first one the player can pay is used |
+| Removing an enchantment from an enchanted book | Didn't stick | Works |
+| License text | Declared GPLv3, but no `LICENSE` file | `LICENSE` in the repo and in the jar |
+
+Everything else (the tree, Ancient Books, transmute/replicate, mod filters, cost files without the new fields)
+works exactly as in the original, and existing 6.x datapacks load unchanged.
+
+## Building
+
+`bash ./gradlew build`. The jar to ship is `build/libs/immersiveenchanting-<version>-all.jar` (it carries
+MixinExtras). No AlfinoLib jar is needed next to it.
 
 ## License
 
@@ -80,10 +101,10 @@ A cost can set `fuel_count` to take that many of the level's fuel item instead o
 - Removing an enchantment from an enchanted book didn't stick (vanilla `setEnchantments` only adds stored
   enchantments); stored enchantments are cleared first now.
 
-## Other
+## For developers
 
 - `EnchantPacket.tryEnchant` holds the check-pay-apply logic that used to be inline in `exec`, so it can be called
   (and tested) without a network context. `CostHelper.isEnchantmentNextLevel` keeps its signature because JLME's
   mixin hooks it.
-- Built with `bash ./gradlew build`; the jar to ship is `build/libs/immersiveenchanting-<version>-all.jar`
-  (it carries MixinExtras). No AlfinoLib dependency any more.
+- Compatible with JLME ver2a's Immersive Enchanting hook (per-item level caps): every level, tier level 1
+  included, still goes through `isEnchantmentNextLevel`.
