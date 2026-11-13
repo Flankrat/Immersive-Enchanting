@@ -1,5 +1,7 @@
 package me.alfie.immersiveenchanting.config;
 
+import java.util.List;
+
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 import org.joml.Vector3i;
@@ -14,6 +16,10 @@ public class ServerConfig {
     public final ForgeConfigSpec.ConfigValue<Integer> BOOKSHELF_SEARCH_X;
     public final ForgeConfigSpec.ConfigValue<Integer> BOOKSHELF_SEARCH_Y;
     public final ForgeConfigSpec.ConfigValue<Integer> BOOKSHELF_SEARCH_Z;
+
+    // fork additions: bookshelf power per tier
+    public final ForgeConfigSpec.ConfigValue<List<? extends Integer>> BOOKSHELF_POWER_PER_TIER;
+    public final ForgeConfigSpec.DoubleValue CHISELED_BOOKSHELF_POWER;
 
     public final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_ENCHANTMENT_REMOVAL;
 
@@ -51,6 +57,16 @@ public class ServerConfig {
                 .comment("The number of blocks in the Z-position that the enchanting table can detect chiseled bookshelves. Each 'row' can hold up to 96 books. If you have many enchantments, you may need to increase this value to provide more space.") // translatable comment
                 .translation("immersiveenchanting.config.bookshelf_search_z") // translatable label
                 .defineInRange("bookshelfSearchZ", 2, 2, 8);
+        BOOKSHELF_POWER_PER_TIER = builder
+                .comment("Bookshelf power needed around the enchanting table, per enchantment tier: normal enchantments, then each tier upgrade",
+                        "(an enchantment whose cost file has \"upgrades_from\": Advanced, then Supreme, ...). Counted in the same area as the chiseled bookshelves.",
+                        "Higher tiers than listed use the last value. Use [0] to turn the requirement off.")
+                .translation("immersiveenchanting.config.bookshelf_power_per_tier")
+                .defineList("bookshelfPowerPerTier", List.of(15, 30, 45), o -> o instanceof Integer i && i >= 0);
+        CHISELED_BOOKSHELF_POWER = builder
+                .comment("Bookshelf power each chiseled bookshelf adds (normal bookshelves add their own enchanting power, 1 for vanilla's).")
+                .translation("immersiveenchanting.config.chiseled_bookshelf_power")
+                .defineInRange("chiseledBookshelfPower", 1.0, 0.0, 15.0);
         builder.pop();
 
 
@@ -92,6 +108,14 @@ public class ServerConfig {
         return new Vector3i(ServerConfig.CONFIG.BOOKSHELF_SEARCH_X.get(),
                 ServerConfig.CONFIG.BOOKSHELF_SEARCH_Y.get(),
                 ServerConfig.CONFIG.BOOKSHELF_SEARCH_Z.get());
+    }
+
+    public static List<? extends Integer> getBookshelfPowerPerTier() {
+        return ServerConfig.CONFIG.BOOKSHELF_POWER_PER_TIER.get();
+    }
+
+    public static double getChiseledBookshelfPower() {
+        return ServerConfig.CONFIG.CHISELED_BOOKSHELF_POWER.get();
     }
 
     public static boolean isEnchantmentRemovalAllowed() {

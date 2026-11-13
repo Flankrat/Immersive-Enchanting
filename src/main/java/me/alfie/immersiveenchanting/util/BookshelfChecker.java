@@ -1,5 +1,9 @@
 package me.alfie.immersiveenchanting.util;
 
+import net.minecraft.world.level.block.state.BlockState;
+
+import net.minecraft.world.level.block.Blocks;
+
 import me.alfie.alfinolib.networking.Networking;
 import me.alfie.immersiveenchanting.block.ModBlocks;
 import me.alfie.immersiveenchanting.config.ServerConfig;
@@ -25,7 +29,31 @@ public class BookshelfChecker {
         List<Holder<Enchantment>> availableEnchantments = getEnchantmentsInBookshelves(tablePos, level);
 
         Networking.sendToClient(serverPlayer, new AvailableEnchantmentsPacket(
-                EnchantmentUtil.toResourceKeys(availableEnchantments)));
+                EnchantmentUtil.toResourceKeys(availableEnchantments), getBookshelfPower(tablePos, level)));
+    }
+
+    /**
+     * Fork addition: bookshelf power around the table, counted in the same area as the chiseled bookshelves
+     * (the ring two blocks out, up to the search radius). Normal bookshelves add their enchanting power (1 each for
+     * vanilla's), chiseled bookshelves add {@code chiseledBookshelfPower} each, so the shelves holding the Ancient
+     * Books count too. No air gap is needed. A Creative Bookshelf nearby gives unlimited power.
+     */
+    public static int getBookshelfPower(BlockPos tablePos, Level level) {
+        if(isCreativeBookshelfNearby(tablePos, level)) return Integer.MAX_VALUE;
+        double chiseledPower = ServerConfig.getChiseledBookshelfPower();
+        double[] power = {0};
+
+        forEachRingPos(tablePos,
+                2, ServerConfig.getBookshelfSearchRadius().x(),
+                0, ServerConfig.getBookshelfSearchRadius().y(),
+                2, ServerConfig.getBookshelfSearchRadius().z(),
+                checkPos -> {
+            BlockState state = level.getBlockState(checkPos);
+            if(state.is(Blocks.CHISELED_BOOKSHELF)) power[0] += chiseledPower;
+            else power[0] += state.getEnchantPowerBonus(level, checkPos);
+        });
+
+        return (int) power[0];
     }
 
     public static List<Holder<Enchantment>> getEnchantmentsInBookshelves(BlockPos blockPos, Level level) {

@@ -32,7 +32,8 @@ import java.util.List;
  *
  * <p>Used to keep the enchanting screen in sync with server-side bookshelf state.</p>
  */
-public record AvailableEnchantmentsPacket(List<ResourceKey<Enchantment>> availableEnchantments) implements NetworkPacket<AvailableEnchantmentsPacket> {
+public record AvailableEnchantmentsPacket(List<ResourceKey<Enchantment>> availableEnchantments,
+                                          int bookshelfPower) implements NetworkPacket<AvailableEnchantmentsPacket> {
 
     public static final StreamCodec<FriendlyByteBuf, AvailableEnchantmentsPacket> STREAM_CODEC = new StreamCodec<>() {
         @Override
@@ -42,6 +43,7 @@ public record AvailableEnchantmentsPacket(List<ResourceKey<Enchantment>> availab
             for (ResourceKey<Enchantment> enchantmentKey : packet.availableEnchantments) {
                 ModPackets.ENCHANTMENT_CODEC.encode(buf, enchantmentKey);
             }
+            buf.writeVarInt(packet.bookshelfPower); // fork: bookshelf power around the table, for tier requirements
         }
 
         @Override
@@ -52,7 +54,7 @@ public record AvailableEnchantmentsPacket(List<ResourceKey<Enchantment>> availab
                 result.add(ModPackets.ENCHANTMENT_CODEC.decode(buf));
             }
 
-            return new AvailableEnchantmentsPacket(result);
+            return new AvailableEnchantmentsPacket(result, buf.readVarInt());
         }
 
     };
@@ -65,6 +67,8 @@ public record AvailableEnchantmentsPacket(List<ResourceKey<Enchantment>> availab
 
         List<Holder<Enchantment>> enchantmentHolders = EnchantmentUtil.toHolders(
                 availableEnchantments, player.level().registryAccess());
+
+        menu.setBookshelfPower(bookshelfPower);
 
         if(ServerConfig.areAncientBooksRequired()) {
             menu.setAvailableEnchantments(enchantmentHolders);
