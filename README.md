@@ -12,7 +12,8 @@ Every change from the original is marked with a `fork` comment in the code.
 | Bookshelf power | Not used; only chiseled bookshelves with Ancient Books matter | Each tier needs more bookshelf power around the table, default 15 / 30 / 45; bookshelves and chiseled bookshelves both count ([details](#bookshelf-power)) |
 | Fuel per level | Always the `enchanting_fuels` amount for that level | A cost can set `fuel_count` for a flat amount, e.g. 5 lapis to go Advanced ([details](#fuel-override)) |
 | AlfinoLib | Separate required mod | Built in, so one jar ([details](#alfinolib-built-in)) |
-| Enchanted books in loot | `REPLACE` (with Ancient Books) or `REMOVE` | Also `KEEP`, which leaves them alone like 5.x could ([details](#enchanted-book-loot)) |
+| Enchanted books in loot | `REPLACE` (with Ancient Books) or `REMOVE` | Also `NOTHING`, which leaves them alone like 5.x could ([details](#enchanted-book-loot)) |
+| New worlds with an Ancient Library near spawn | Crash (AlfinoLib's data isn't loaded until after spawn generates) | Fixed ([details](#fixes)) |
 | Cost alternatives | Only the last alternative of a level was accepted | The first one the player can pay is used |
 | Removing an enchantment from an enchanted book | Didn't stick | Works |
 | License text | Declared GPLv3, but no `LICENSE` file | `LICENSE` in the repo and in the jar |
@@ -91,11 +92,16 @@ A cost can set `fuel_count` to take that many of the level's fuel item instead o
 
 ## Enchanted book loot
 
-`enchantedBookLootMode` gains `KEEP`, which leaves vanilla enchanted books in loot as they are (what 5.x's
-`enableEnchantedBookLootTables = true` did; 6.0.1 only had `REPLACE` and `REMOVE`).
+`enchantedBookLootMode` gains `NOTHING`, which leaves vanilla enchanted books in loot as they are (what 5.x's
+`enableEnchantedBookLootTables = true` did; 6.0.1 only had `REPLACE` and `REMOVE`). Same as Kettle's upstream PR
+(alfiehanks/Immersive-Enchanting#96), so configs stay compatible if it's merged there.
 
 ## Fixes
 
+- New worlds crashed when an Ancient Library generated in the spawn area: its bookshelves pick random
+  enchantments from the cost data, which AlfinoLib only loaded after the server finished starting, and spawn chunks
+  generate before that. The data is now also loaded when the server is about to start (AlfinoLib upstream PR
+  alfiehanks/AlfinoLib#2).
 - When a level had several cost alternatives, only the last one counted (the loop never stopped). Now the first
   alternative the player can pay, fuel included, is used.
 - Removing an enchantment from an enchanted book didn't stick (vanilla `setEnchantments` only adds stored
