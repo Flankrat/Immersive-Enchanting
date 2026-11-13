@@ -1,9 +1,9 @@
 package me.alfie.immersiveenchanting.gui.tab.enchanting.tooltip;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import me.alfie.alfinolib.gui.GuiGraphicsX;
-import me.alfie.alfinolib.gui.ScreenEventListener;
-import me.alfie.alfinolib.gui.util.MousePos;
+import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
+import me.alfie.immersiveenchanting.alfinolib.gui.ScreenEventListener;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
 import me.alfie.immersiveenchanting.gui.EnchantingTableScreen;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.node.Node;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.node.NodeState;

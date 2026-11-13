@@ -1,9 +1,9 @@
 package me.alfie.immersiveenchanting.networking;
 
-import me.alfie.alfinolib.networking.NetworkPacket;
-import me.alfie.alfinolib.networking.codec.CommonCodecs;
-import me.alfie.alfinolib.networking.codec.StreamCodec;
-import me.alfie.alfinolib.networking.codec.StreamCodecBuilder;
+import me.alfie.immersiveenchanting.alfinolib.networking.NetworkPacket;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.CommonCodecs;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodecBuilder;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.gui.EnchantingTableMenu;
 import net.minecraft.network.FriendlyByteBuf;

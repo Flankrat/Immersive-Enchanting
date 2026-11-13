@@ -1,10 +1,10 @@
 package me.alfie.immersiveenchanting.datapack.enchantment_cost;
 
 import com.google.gson.JsonElement;
-import me.alfie.alfinolib.datapacks.*;
-import me.alfie.alfinolib.datapacks.client.ClientDatapackUpdatedEvent;
-import me.alfie.alfinolib.datapacks.server.ServerDatapackUpdatedEvent;
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.*;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.client.ClientDatapackUpdatedEvent;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.server.ServerDatapackUpdatedEvent;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.codec.Cost;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.codec.CostData;

@@ -1,6 +1,6 @@
 package me.alfie.immersiveenchanting.gui.tab.enchanting.tooltip;
 
-import me.alfie.alfinolib.networking.Networking;
+import me.alfie.immersiveenchanting.alfinolib.networking.Networking;
 import me.alfie.immersiveenchanting.gui.EnchantingTableScreen;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.node.Node;
 import me.alfie.immersiveenchanting.networking.RemoveEnchantmentPacket;

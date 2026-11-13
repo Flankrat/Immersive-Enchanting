@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting.gui.tab.enchanting.tooltip;
 
-import me.alfie.alfinolib.gui.GuiGraphicsX;
-import me.alfie.alfinolib.gui.util.GuiGraphicsApi;
+import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.GuiGraphicsApi;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.api.node.ItemIcon;
 import me.alfie.immersiveenchanting.api.node.NodeIcon;

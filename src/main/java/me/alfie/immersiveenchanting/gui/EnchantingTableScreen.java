@@ -2,10 +2,10 @@ package me.alfie.immersiveenchanting.gui;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
-import me.alfie.alfinolib.gui.CommonAbstractContainerScreen;
-import me.alfie.alfinolib.gui.GuiGraphicsX;
-import me.alfie.alfinolib.gui.util.GuiGraphicsApi;
-import me.alfie.alfinolib.gui.util.MousePos;
+import me.alfie.immersiveenchanting.alfinolib.gui.CommonAbstractContainerScreen;
+import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.GuiGraphicsApi;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.CostRegistry;
 import me.alfie.immersiveenchanting.gui.canvas.Canvas;
 import me.alfie.immersiveenchanting.gui.canvas.CanvasCamera;

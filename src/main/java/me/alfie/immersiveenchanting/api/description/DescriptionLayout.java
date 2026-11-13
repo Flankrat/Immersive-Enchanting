@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting.api.description;
 
-import me.alfie.alfinolib.gui.GuiGraphicsX;
-import me.alfie.alfinolib.gui.util.MousePos;
+import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.tooltip.TooltipDescription;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;

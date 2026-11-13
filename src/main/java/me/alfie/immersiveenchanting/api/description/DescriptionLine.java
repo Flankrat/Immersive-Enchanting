@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting.api.description;
 
-import me.alfie.alfinolib.gui.GuiGraphicsX;
-import me.alfie.alfinolib.gui.util.MousePos;
+import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 

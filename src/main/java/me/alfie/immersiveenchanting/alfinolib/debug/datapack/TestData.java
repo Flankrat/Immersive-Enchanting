@@ -1,0 +1,24 @@
+package me.alfie.immersiveenchanting.alfinolib.debug.datapack;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.CommonCodecs;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodecBuilder;
+import net.minecraft.network.FriendlyByteBuf;
+
+/**
+ * Test data example that holds a string and an int
+ */
+public record TestData(String testString) {
+
+    static final Codec<TestData> CODEC = RecordCodecBuilder.create(
+            testDataInstance -> testDataInstance.group(
+                    Codec.STRING.fieldOf("testString").forGetter(TestData::testString)
+            ).apply(testDataInstance, TestData::new)
+    );
+
+    static final StreamCodec<FriendlyByteBuf, TestData> STREAM_CODEC = StreamCodecBuilder.<FriendlyByteBuf, TestData>create()
+            .add(CommonCodecs.STRING, TestData::testString)
+            .build(TestData::new);
+}

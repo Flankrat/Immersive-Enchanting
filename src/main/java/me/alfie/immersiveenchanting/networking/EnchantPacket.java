@@ -1,14 +1,15 @@
 package me.alfie.immersiveenchanting.networking;
 
-import me.alfie.alfinolib.networking.NetworkPacket;
-import me.alfie.alfinolib.networking.codec.StreamCodec;
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.networking.NetworkPacket;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.CostRegistry;
 import me.alfie.immersiveenchanting.gui.EnchantingTableMenu;
 import me.alfie.immersiveenchanting.util.CostHelper;
 import me.alfie.immersiveenchanting.util.EnchantmentUtil;
 import me.alfie.immersiveenchanting.util.FxHelper;
+import me.alfie.immersiveenchanting.util.TierUpgrades;
 import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
@@ -59,22 +60,40 @@ public record EnchantPacket(ResourceKey<Enchantment> enchantmentKey, int level) 
         Holder<Enchantment> enchantmentHolder = EnchantmentUtil.toHolder(enchantmentKey,
                 player.level().registryAccess());
 
-        ItemStack stack = menu.getToolSlot().getItem();
-        if(CostHelper.canEnchant(menu, enchantmentHolder, level, player)) {
-            Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
-            enchantments.remove(enchantmentHolder.value());
-            enchantments.put(enchantmentHolder.get(), level());
-            EnchantmentHelper.setEnchantments(enchantments, stack);
-            menu.getToolSlot().setChanged();
-
+        if(tryEnchant(menu, enchantmentHolder, level, player)) {
             boolean isHighestTier = level == CostRegistry.server()
                     .get(enchantmentHolder)
                     .levelCosts()
                     .maxLevel();
-
-            menu.getToolSlot().set(EnchantmentUtil.tryConvertVanillaBook(stack));
-
             FxHelper.playEnchantSuccess(context.getSender(), menu.getBlockPos(), isHighestTier);
         }
+    }
+
+    /**
+     * Checks and pays for the enchantment, then applies it to the item in the tool slot. Returns whether it was
+     * applied. Split out of {@link #exec} by the fork so it can be tested without a network context.
+     */
+    public static boolean tryEnchant(EnchantingTableMenu menu, Holder<Enchantment> enchantmentHolder, int level, Player player) {
+        ItemStack stack = menu.getToolSlot().getItem();
+        if(!CostHelper.canEnchant(menu, enchantmentHolder, level, player)) return false;
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+        enchantments.remove(enchantmentHolder.value());
+
+        // fork: buying level 1 of a tier upgrade replaces the previous tier (Sharpness V -> Advanced Sharpness I)
+        Holder<Enchantment> previous = TierUpgrades.previousTier(CostRegistry.server(), enchantmentHolder,
+                player.level().registryAccess());
+        if(previous != null && level == 1) enchantments.remove(previous.value());
+
+        enchantments.put(enchantmentHolder.get(), level);
+
+        // fork fix: setEnchantments only ADDS stored enchantments on an enchanted book, so a removed one would
+        // stay. Clearing them first makes the book end up with exactly the new set.
+        if(stack.is(Items.ENCHANTED_BOOK)) stack.removeTagKey("StoredEnchantments");
+        EnchantmentHelper.setEnchantments(enchantments, stack);
+        menu.getToolSlot().setChanged();
+
+        menu.getToolSlot().set(EnchantmentUtil.tryConvertVanillaBook(stack));
+
+        return true;
     }
 }

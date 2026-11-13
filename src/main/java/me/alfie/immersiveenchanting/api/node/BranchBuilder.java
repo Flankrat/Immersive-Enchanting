@@ -1,6 +1,6 @@
 package me.alfie.immersiveenchanting.api.node;
 
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.gui.canvas.Canvas;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.node.NodeBranch;
 

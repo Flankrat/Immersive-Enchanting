@@ -1,9 +1,9 @@
 package me.alfie.immersiveenchanting.datapack.enchantment_cost;
 
-import me.alfie.alfinolib.datapacks.client.ClientDatapackManager;
-import me.alfie.alfinolib.datapacks.server.ServerDatapackManager;
-import me.alfie.alfinolib.networking.codec.StreamCodec;
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.client.ClientDatapackManager;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.server.ServerDatapackManager;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.codec.CostData;
 import net.minecraft.core.Holder;
@@ -146,7 +146,15 @@ public class CostRegistry {
         return highestLevel;
     }
 
+    /**
+     * A random enabled enchantment for Ancient Books (loot, structures, command). Fork: tier upgrades are left out,
+     * since they're unlocked by the previous tier rather than by a book; if every enchantment is a tier, any is used.
+     */
     public Holder<Enchantment> getRandomEnchantment(RandomSource randomSource) {
-        return getAllEnabledEnchantmentHolders().get(randomSource.nextInt(getAllEnabledEnchantmentHolders().size()));
+        List<Holder<Enchantment>> candidates = getAllEnabledEnchantmentHolders();
+        List<Holder<Enchantment>> normal = new ArrayList<>(candidates);
+        normal.removeIf(holder -> get(holder).isTier());
+        if(!normal.isEmpty()) candidates = normal;
+        return candidates.get(randomSource.nextInt(candidates.size()));
     }
 }
