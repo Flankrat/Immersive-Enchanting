@@ -234,6 +234,13 @@ public class EnchantingTableMenu extends AbstractContainerMenu {
                     enchantingFuelItems.add(fuelStack.getItem());
                 }
             }
+            // fork: fuels that cost files name themselves (e.g. dragon blood for Supreme) shift-click into the fuel slot too
+            for(Holder<Enchantment> enchantmentHolder : registry.getAllEnchantmentHolders()) {
+                for(Cost cost : registry.get(enchantmentHolder).levelCosts().getAllLevels()) {
+                    if(!cost.hasFuelOverride()) continue;
+                    for(ItemStack fuelStack : cost.fuel().getItemStacks()) enchantingFuelItems.add(fuelStack.getItem());
+                }
+            }
 
             //Quick move into menu
             if(stack.getItem().isEnchantable(stack) || stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK) || stack.is(ModItems.ANCIENT_BOOK.get()) || stack.is(ModItems.CREATIVE_BOOKSHELF_ITEM.get())) {

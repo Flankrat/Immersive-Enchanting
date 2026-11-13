@@ -10,7 +10,7 @@ Every change from the original is marked with a `fork` comment in the code.
 |---|---|---|
 | Tier upgrades (Sharpness V → Advanced Sharpness I → Supreme) | Not supported; one branch per enchantment, no way to turn one enchantment into another | Cost files can say `"upgrades_from"`; the next tier shows up once the previous one is maxed and replaces it ([details](#tier-upgrades)) |
 | Bookshelf power | Not used; only chiseled bookshelves with Ancient Books matter | Each tier needs more bookshelf power around the table, default 15 / 30 / 45; bookshelves and chiseled bookshelves both count ([details](#bookshelf-power)) |
-| Fuel per level | Always the `enchanting_fuels` amount for that level | A cost can set `fuel_count` for a flat amount, e.g. 5 lapis to go Advanced ([details](#fuel-override)) |
+| Fuel per level | Always the `enchanting_fuels` item and amount for that level | A cost can set `fuel_count` for a different amount, or `fuel` for a different item or tag, e.g. dragon blood for the top tier ([details](#fuel-override)) |
 | AlfinoLib | Separate required mod | Built in, so one jar ([details](#alfinolib-built-in)) |
 | Enchanted books in loot | `REPLACE` (with Ancient Books) or `REMOVE` | Also `NOTHING`, which leaves them alone like 5.x could ([details](#enchanted-book-loot)) |
 | New worlds with an Ancient Library near spawn | Crash (AlfinoLib's data isn't loaded until after spawn generates) | Fixed ([details](#fixes)) |
@@ -87,8 +87,19 @@ A node locked by power says "Needs X bookshelf power (has Y)" instead of "Unknow
 
 ## Fuel override
 
-A cost can set `fuel_count` to take that many of the level's fuel item instead of the enchanting_fuels amount
-(0 or left out keeps the old behaviour). Tier steps use it for their flat lapis cost. The tooltip shows it.
+Two optional fields on a cost change what goes in the fuel slot for that level:
+
+- `fuel_count`: how many of the normal fuel (the `enchanting_fuels` file's item, lapis by default) the level takes,
+  instead of that file's amount. `0` or left out keeps the old behaviour.
+- `fuel`: a different fuel item or tag with its own count, replacing the normal fuel (and `fuel_count`) entirely:
+
+```json
+"5": [{"item_cost": {"item": "minecraft:diamond", "count": 2}, "xp_levels": 80,
+       "fuel": {"tag": "immersiveenchanting:supreme_fuel", "count": 4}}]
+```
+
+The tooltip shows whichever fuel the level takes, and shift-clicking an item named by any cost's `fuel` moves it
+into the fuel slot like lapis.
 
 ## Enchanted book loot
 
