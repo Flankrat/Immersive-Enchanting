@@ -118,10 +118,11 @@ public class CostHelper {
 
     /**
      * Fork addition: the fuel options for paying {@code cost}. Normally the enchanting_fuels file's options for the
-     * level; when the cost has a {@code fuel_count} override, the same fuel items but that many of them (falling back
+     * level; when the cost names its own {@code fuel}, just that; when it has a {@code fuel_count} override, the same fuel items but that many of them (falling back
      * to the fuel file's level 1 items when it has no entry for this level). Used by the server and the tooltip.
      */
     public static List<Cost> fuelFor(Cost cost, CostHolder fuelForLevel) {
+        if(cost.hasFuelOverride()) return List.of(new Cost(cost.fuel(), 0)); // its own fuel item, e.g. dragon blood
         if(cost.fuelCount() <= 0) return fuelForLevel.costs();
         List<Cost> fuelOptions = fuelForLevel.costs();
         if(fuelOptions.isEmpty() && CostRegistry.server().isRegistered(CostRegistry.ENCHANTING_FUELS)) {

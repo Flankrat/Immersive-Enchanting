@@ -41,9 +41,13 @@ public class CostRenderer {
 
         fuelHolder = costRegistry.get(CostRegistry.ENCHANTING_FUELS).levelCosts().getLevel(level);
 
-        // fork: a cost with fuel_count shows that many of the fuel item (e.g. 10 lapis to go Supreme)
-        int fuelCount = holder.costs().isEmpty() ? 0 : holder.costs().get(0).fuelCount();
-        if(fuelCount > 0) {
+        // fork: a cost with its own fuel shows that item (e.g. dragon blood for Supreme); one with fuel_count shows
+        // that many of the normal fuel (e.g. 4 lapis for Advanced II)
+        Cost first = holder.costs().isEmpty() ? Cost.EMPTY : holder.costs().get(0);
+        int fuelCount = first.fuelCount();
+        if(first.hasFuelOverride()) {
+            fuelHolder = new CostHolder(List.of(new Cost(first.fuel(), 0)));
+        } else if(fuelCount > 0) {
             List<Cost> fuels = fuelHolder.costs().isEmpty()
                     ? costRegistry.get(CostRegistry.ENCHANTING_FUELS).levelCosts().getLevel(1).costs()
                     : fuelHolder.costs();
