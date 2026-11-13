@@ -1,9 +1,0 @@
-{
-  "levels": {
-    "1": [{"item_cost": {"item": "minecraft:obsidian", "count": 1}}],
-    "2": [{"item_cost": {"item": "minecraft:anvil", "count": 1}}],
-    "3": [{"item_cost": {"item": "minecraft:ancient_debris", "count": 1}}],
-    "4": [{"item_cost": {"item": "minecraft:heavy_core", "count": 1}}],
-    "5": [{"item_cost": {"item": "minecraft:nether_star", "count": 1}}]
-  }
-}

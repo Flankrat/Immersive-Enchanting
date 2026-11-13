@@ -26,20 +26,10 @@
       "volume": 0.5,
       "pitch": 1.0
     },
-    "minecraft:breach": {
-      "sound": "minecraft:item.mace.smash_air",
-      "volume": 0.5,
-      "pitch": 1.0
-    },
     "minecraft:channeling": {
       "sound": "minecraft:entity.elder_guardian.curse",
       "volume": 0.5,
       "pitch": 2.0
-    },
-    "minecraft:density": {
-      "sound": "minecraft:item.mace.smash_ground",
-      "volume": 0.5,
-      "pitch": 1.0
     },
     "minecraft:depth_strider": {
       "sound": "minecraft:entity.fish.swim",
@@ -113,11 +103,6 @@
     },
     "minecraft:lure": {
       "sound": "minecraft:entity.fishing_bobber.splash",
-      "volume": 0.3,
-      "pitch": 1.0
-    },
-    "minecraft:lunge": {
-      "sound": "minecraft:item.spear.lunge_1",
       "volume": 0.3,
       "pitch": 1.0
     },
@@ -208,11 +193,6 @@
     },
     "minecraft:unbreaking": {
       "sound": "minecraft:item.shield.block",
-      "volume": 0.5,
-      "pitch": 1.0
-    },
-    "minecraft:wind_burst": {
-      "sound": "minecraft:entity.wind_charge.wind_burst",
       "volume": 0.5,
       "pitch": 1.0
     }

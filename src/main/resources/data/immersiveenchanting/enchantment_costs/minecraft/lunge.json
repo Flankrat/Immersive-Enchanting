@@ -1,8 +1,0 @@
-{
-  "enabled": true,
-  "levels": {
-    "1": [{"item_cost": {"item": "minecraft:slime_ball", "count": 1}}],
-    "2": [{"item_cost": {"item": "minecraft:rabbit_foot", "count": 1}}],
-    "3": [{"item_cost": {"item": "minecraft:ochre_froglight", "count": 1}}]
-  }
-}
