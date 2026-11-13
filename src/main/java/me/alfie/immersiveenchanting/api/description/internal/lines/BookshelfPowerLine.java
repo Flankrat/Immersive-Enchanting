@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting.api.description.internal.lines;
 
-import me.alfie.alfinolib.gui.GuiGraphicsX;
-import me.alfie.alfinolib.gui.util.MousePos;
+import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
 import me.alfie.immersiveenchanting.api.description.DescriptionHelper;
 import me.alfie.immersiveenchanting.api.description.DescriptionLine;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.tooltip.NodeTooltip;

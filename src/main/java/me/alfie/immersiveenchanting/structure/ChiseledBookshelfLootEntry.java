@@ -2,8 +2,8 @@ package me.alfie.immersiveenchanting.structure;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import me.alfie.alfinolib.util.codec.ItemCost;
-import me.alfie.alfinolib.util.codec.ItemCostIngredient;
+import me.alfie.immersiveenchanting.alfinolib.util.codec.ItemCost;
+import me.alfie.immersiveenchanting.alfinolib.util.codec.ItemCostIngredient;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;

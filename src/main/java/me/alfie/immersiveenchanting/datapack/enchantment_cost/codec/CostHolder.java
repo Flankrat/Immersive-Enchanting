@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting.datapack.enchantment_cost.codec;
 
 import com.mojang.serialization.Codec;
-import me.alfie.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
 import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.ArrayList;

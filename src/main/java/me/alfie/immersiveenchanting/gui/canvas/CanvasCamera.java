@@ -1,8 +1,8 @@
 package me.alfie.immersiveenchanting.gui.canvas;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import me.alfie.alfinolib.gui.ScreenEventListener;
-import me.alfie.alfinolib.gui.util.MousePos;
+import me.alfie.immersiveenchanting.alfinolib.gui.ScreenEventListener;
+import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
 import me.alfie.immersiveenchanting.gui.EnchantingTableScreen;
 
 /**

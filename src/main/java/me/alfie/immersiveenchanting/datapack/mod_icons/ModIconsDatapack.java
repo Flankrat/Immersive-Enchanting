@@ -1,11 +1,11 @@
 package me.alfie.immersiveenchanting.datapack.mod_icons;
 
 import com.google.gson.JsonElement;
-import me.alfie.alfinolib.datapacks.DatapackDefinition;
-import me.alfie.alfinolib.datapacks.DatapackKey;
-import me.alfie.alfinolib.datapacks.DatapackRegistry;
-import me.alfie.alfinolib.datapacks.ModDatapack;
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.DatapackDefinition;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.DatapackKey;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.DatapackRegistry;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.ModDatapack;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;

@@ -1,8 +1,8 @@
 package me.alfie.immersiveenchanting.networking;
 
-import me.alfie.alfinolib.networking.NetworkRegisterEvent;
-import me.alfie.alfinolib.networking.Networking;
-import me.alfie.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.networking.NetworkRegisterEvent;
+import me.alfie.immersiveenchanting.alfinolib.networking.Networking;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;

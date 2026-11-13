@@ -1,6 +1,6 @@
 package me.alfie.immersiveenchanting.gui.core;
 
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 
 public enum NineSliceSprite {
