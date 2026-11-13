@@ -1,7 +1,7 @@
-# Immersive Enchanting, RLCraft fork
+# Immersive Enchanting, 1.20.1 fork
 
 A fork of [Immersive Enchanting](https://github.com/alfiehanks/Immersive-Enchanting) 6.0.1 (branch `forge-1.20.1`) by
-alfino (alfiehanks), made for the RLCraft port to Minecraft 1.20.1 (Forge 47.x). Version `6.0.1-rlcraft.1`.
+alfino (alfiehanks), for Minecraft 1.20.1 (Forge 47.x). Version `6.0.1-fork.1`.
 Every change from the original is marked with a `fork` comment in the code.
 
 ## What's different from the original
@@ -30,7 +30,7 @@ MixinExtras). No AlfinoLib jar is needed next to it.
 
 GNU General Public License v3.0, the license upstream's `forge-1.20.1` branch (and 6.0.1's mod listing) is released
 under. The full text is in `LICENSE` and ships inside the jar. Original code copyright alfino (alfiehanks); fork
-changes by the RLCraft port team, under the same license. Upstream's later NeoForge 26.1 branch switched to
+changes by Flankrat, under the same license. Upstream's later NeoForge 26.1 branch switched to
 CC BY-NC 4.0; that doesn't change the license of the 1.20.1 code this fork is built from, and nothing from that
 branch is used here.
 
@@ -54,8 +54,8 @@ An enchantment cost file can name the enchantment it upgrades from:
 {
   "upgrades_from": "minecraft:sharpness",
   "levels": {
-    "1": [{"item_cost": {"item": "rlmoderntweaks:biotite", "count": 2}, "xp_levels": 8, "fuel_count": 5}],
-    "2": [{"item_cost": {"item": "rlmoderntweaks:biotite", "count": 2}, "xp_levels": 16}]
+    "1": [{"item_cost": {"item": "minecraft:diamond", "count": 2}, "xp_levels": 8, "fuel_count": 5}],
+    "2": [{"item_cost": {"item": "minecraft:diamond", "count": 2}, "xp_levels": 16}]
   }
 }
 ```
