@@ -1,8 +1,28 @@
 # Immersive Enchanting, RLCraft fork
 
-A fork of [Immersive Enchanting](https://github.com/alfiehanks/Immersive-Enchanting) 6.0.1 by alfino (alfiehanks),
-for the RLCraft 1.20.1 port. Licensed GPLv3 like the original. Version `6.0.1-rlcraft.1`, still needs
-AlfinoLib 1.2.0. Every change is marked with a `fork` comment in the code.
+A fork of [Immersive Enchanting](https://github.com/alfiehanks/Immersive-Enchanting) 6.0.1 (branch `forge-1.20.1`) by
+alfino (alfiehanks), for the RLCraft 1.20.1 port. Version `6.0.1-rlcraft.1`. Every change is marked with a `fork`
+comment in the code.
+
+## License
+
+GNU General Public License v3.0, the license upstream's `forge-1.20.1` branch (and 6.0.1's mod listing) is released
+under. The full text is in `LICENSE` and ships inside the jar. Original code copyright alfino (alfiehanks); fork
+changes by the RLCraft port team, under the same license. Upstream's later NeoForge 26.1 branch switched to
+CC BY-NC 4.0; that doesn't change the license of the 1.20.1 code this fork is built from, and nothing from that
+branch is used here.
+
+## AlfinoLib built in
+
+[AlfinoLib](https://github.com/alfiehanks/AlfinoLib) 1.2.0 (branch `forge-1.20.1`, also alfino's, also GPLv3) is part
+of this jar, so the separate AlfinoLib mod isn't needed. Its source is in
+`src/main/java/me/alfie/immersiveenchanting/alfinolib`, unchanged except:
+
+- moved from `me.alfie.alfinolib` to `me.alfie.immersiveenchanting.alfinolib`, and its id (network channel, debug
+  command `/ie_alfinolib`, test datapack folder `data/ie_alfinolib`) from `alfinolib` to `ie_alfinolib`, so it can't
+  clash with a standalone AlfinoLib jar another mod might bring;
+- it's no longer a `@Mod`: `AlfinoLib.init(modEventBus)` does what its mod constructor did, and Immersive
+  Enchanting calls it first thing in its own constructor.
 
 ## Tier upgrades
 
@@ -61,4 +81,4 @@ A cost can set `fuel_count` to take that many of the level's fuel item instead o
   (and tested) without a network context. `CostHelper.isEnchantmentNextLevel` keeps its signature because JLME's
   mixin hooks it.
 - Built with `bash ./gradlew build`; the jar to ship is `build/libs/immersiveenchanting-<version>-all.jar`
-  (it carries MixinExtras).
+  (it carries MixinExtras). No AlfinoLib dependency any more.

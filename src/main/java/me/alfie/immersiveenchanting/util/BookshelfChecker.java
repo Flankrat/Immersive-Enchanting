@@ -4,7 +4,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraft.world.level.block.Blocks;
 
-import me.alfie.alfinolib.networking.Networking;
+import me.alfie.immersiveenchanting.alfinolib.networking.Networking;
 import me.alfie.immersiveenchanting.block.ModBlocks;
 import me.alfie.immersiveenchanting.config.ServerConfig;
 import me.alfie.immersiveenchanting.item.ModItems;

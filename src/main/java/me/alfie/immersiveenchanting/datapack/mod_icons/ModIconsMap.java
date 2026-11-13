@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting.datapack.mod_icons;
 
 import com.mojang.serialization.Codec;
-import me.alfie.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
 import me.alfie.immersiveenchanting.item.ModItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;

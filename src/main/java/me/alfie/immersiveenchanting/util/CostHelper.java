@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting.util;
 
-import me.alfie.alfinolib.util.ResourceId;
-import me.alfie.alfinolib.util.codec.ItemCost;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.util.codec.ItemCost;
 import net.minecraft.core.RegistryAccess;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.CostRegistry;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.codec.Cost;

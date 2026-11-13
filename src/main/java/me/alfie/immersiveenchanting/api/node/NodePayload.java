@@ -1,6 +1,6 @@
 package me.alfie.immersiveenchanting.api.node;
 
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 
 /**
  * Marker interface for all node data payloads.

@@ -1,7 +1,7 @@
 package me.alfie.immersiveenchanting.datapack.enchantment_cost.codec;
 
 import com.mojang.serialization.Codec;
-import me.alfie.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
 import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.*;
@@ -34,7 +34,7 @@ public record CostLevels(Map<Integer, CostHolder> levelCostMap) {
 
 
 
-    public static final StreamCodec<FriendlyByteBuf, CostLevels> STREAM_CODEC = new me.alfie.alfinolib.networking.codec.StreamCodec<FriendlyByteBuf, CostLevels>() {
+    public static final StreamCodec<FriendlyByteBuf, CostLevels> STREAM_CODEC = new me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec<FriendlyByteBuf, CostLevels>() {
         @Override
         public void encode(FriendlyByteBuf buf, CostLevels costLevels) {
             Map<Integer, CostHolder> map = costLevels.levelCostMap();

@@ -1,6 +1,6 @@
 package me.alfie.immersiveenchanting.gui.tab.enchanting.tooltip;
 
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import org.joml.Vector2i;
 
 public abstract class TooltipComponent extends NineSliceBox {

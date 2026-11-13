@@ -1,9 +1,9 @@
 package me.alfie.immersiveenchanting.datapack.enchantment_cost;
 
-import me.alfie.alfinolib.datapacks.client.ClientDatapackManager;
-import me.alfie.alfinolib.datapacks.server.ServerDatapackManager;
-import me.alfie.alfinolib.networking.codec.StreamCodec;
-import me.alfie.alfinolib.util.ResourceId;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.client.ClientDatapackManager;
+import me.alfie.immersiveenchanting.alfinolib.datapacks.server.ServerDatapackManager;
+import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
+import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.codec.CostData;
 import net.minecraft.core.Holder;
