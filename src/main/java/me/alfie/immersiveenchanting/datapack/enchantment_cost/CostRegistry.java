@@ -146,7 +146,15 @@ public class CostRegistry {
         return highestLevel;
     }
 
+    /**
+     * A random enabled enchantment for Ancient Books (loot, structures, command). Fork: tier upgrades are left out,
+     * since they're unlocked by the previous tier rather than by a book; if every enchantment is a tier, any is used.
+     */
     public Holder<Enchantment> getRandomEnchantment(RandomSource randomSource) {
-        return getAllEnabledEnchantmentHolders().get(randomSource.nextInt(getAllEnabledEnchantmentHolders().size()));
+        List<Holder<Enchantment>> candidates = getAllEnabledEnchantmentHolders();
+        List<Holder<Enchantment>> normal = new ArrayList<>(candidates);
+        normal.removeIf(holder -> get(holder).isTier());
+        if(!normal.isEmpty()) candidates = normal;
+        return candidates.get(randomSource.nextInt(candidates.size()));
     }
 }

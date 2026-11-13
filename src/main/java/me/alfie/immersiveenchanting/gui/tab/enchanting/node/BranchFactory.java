@@ -15,6 +15,7 @@ import me.alfie.immersiveenchanting.gui.tab.enchanting.EnchantingTab;
 import me.alfie.immersiveenchanting.item.ModItems;
 import me.alfie.immersiveenchanting.util.EnchantmentTextureHelper;
 import me.alfie.immersiveenchanting.util.EnchantmentUtil;
+import me.alfie.immersiveenchanting.util.TierUpgrades;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
@@ -69,6 +70,9 @@ public class BranchFactory {
         if(event.getStack().is(ModItems.CREATIVE_BOOKSHELF_ITEM.get()) || event.getStack().is(Items.BOOK)) {
             applicableEnchantments = allEnchantments;
         }
+
+        // fork: tier upgrades only show up once the item can take them (see filterTierUpgrades)
+        applicableEnchantments = filterTierUpgrades(event, allEnchantments, applicableEnchantments);
 
         if(event.getCanvas().screen().enchantingTab().isDisplay(EnchantingTab.Display.ENCHANTMENTS)) {
 
@@ -166,7 +170,7 @@ public class BranchFactory {
             NodeState state = equippedLevel > enchantmentLevel ? NodeState.OBTAINED : NodeState.UNOBTAINED;
             NodeTier tier = enchantmentLevel+1 == maxLevel ? NodeTier.ELITE : NodeTier.BASIC;
 
-            if(!event.getCanvas().screen().getMenu().isEnchantmentAvailable(enchantmentHolder))
+            if(!isUnlocked(event, enchantmentHolder))
                 state = NodeState.LOCKED;
 
 
@@ -187,6 +191,64 @@ public class BranchFactory {
         event.addBranch(BranchBuilder.of(event.getCanvas(), EnchantmentUtil.toId(enchantmentHolder))
                 .nodes(nodeTemplates)
                 .build());
+    }
+
+    /**
+     * Fork: whether the enchantment can be bought at this table. Normal enchantments need an Ancient Book for them
+     * nearby (as before); tier upgrades don't (having the previous tier unlocks them). Both need enough bookshelf
+     * power for their tier. Must match {@code CostHelper.canEnchant} on the server.
+     */
+    public static boolean isUnlocked(BuildBranchesEvent event, Holder<Enchantment> enchantmentHolder) {
+        CostRegistry registry = event.costRegistry();
+        RegistryAccess access = event.getCanvas().screen().registryAccess();
+        var menu = event.getCanvas().screen().getMenu();
+
+        if(!TierUpgrades.isTier(registry, enchantmentHolder) && !menu.isEnchantmentAvailable(enchantmentHolder)) return false;
+        return menu.getBookshelfPower() >= requiredBookshelfPower(registry, enchantmentHolder, access);
+    }
+
+    /** Fork: the bookshelf power this enchantment's tier needs (used by the tooltip too). */
+    public static int requiredBookshelfPower(CostRegistry registry, Holder<Enchantment> enchantmentHolder, RegistryAccess access) {
+        return TierUpgrades.requiredBookshelfPower(TierUpgrades.tierIndex(registry, enchantmentHolder, access));
+    }
+
+    /**
+     * Fork: tier upgrades get their own branch only when the item already has them, or has the previous tier at its
+     * max level (and they'd fit with the other enchantments once the previous tier is replaced). Otherwise they're
+     * hidden, including on plain books, so Advanced and Supreme enchantments can't be bought from nothing.
+     * The normal compatibility filter usually drops them (the previous tier conflicts with them), so they're
+     * checked here against the full enchantment list instead.
+     */
+    private static List<Holder<Enchantment>> filterTierUpgrades(BuildBranchesEvent event,
+                                                               List<Holder<Enchantment>> allEnchantments,
+                                                               List<Holder<Enchantment>> applicableEnchantments) {
+        CostRegistry registry = event.costRegistry();
+        RegistryAccess access = event.getCanvas().screen().registryAccess();
+        ItemStack stack = event.getStack();
+        boolean isBook = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
+
+        List<Holder<Enchantment>> result = new ArrayList<>();
+        for(Holder<Enchantment> holder : applicableEnchantments) {
+            if(!TierUpgrades.isTier(registry, holder)) result.add(holder);
+        }
+
+        for(Holder<Enchantment> holder : allEnchantments) {
+            if(!TierUpgrades.isTier(registry, holder)) continue;
+            if(registry.isRegistered(holder) && !registry.get(holder).enabled()) continue;
+            if(!isBook && !holder.value().canEnchant(stack)) continue;
+
+            boolean hasIt = EnchantmentUtil.getEnchantmentLevel(stack, holder) > 0;
+            Holder<Enchantment> previous = TierUpgrades.previousTier(registry, holder, access);
+            boolean canUpgrade = previous != null
+                    && TierUpgrades.previousTierMaxed(registry, stack, holder, access)
+                    && TierUpgrades.compatibleAfterUpgrade(stack, holder.value(), previous.value());
+
+            if(hasIt || canUpgrade) result.add(holder);
+        }
+
+        // keep the original order (registry order) so branches don't jump around
+        result.sort(Comparator.comparingInt(allEnchantments::indexOf));
+        return result;
     }
 
     private static void buildTransmuteBranch(BuildBranchesEvent event) {
