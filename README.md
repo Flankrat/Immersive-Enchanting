@@ -1,7 +1,7 @@
 # Immersive Enchanting, 1.20.1 fork
 
 A fork of [Immersive Enchanting](https://github.com/alfiehanks/Immersive-Enchanting) 6.0.1 (branch `forge-1.20.1`) by
-alfino (alfiehanks), for Minecraft 1.20.1 (Forge 47.x). Version `6.0.1-fork.1`.
+alfino (alfiehanks), for Minecraft 1.20.1 (Forge 47.x). Version `6.0.1-fork.2`.
 Every change from the original is marked with a `fork` comment in the code.
 
 ## What's different from the original

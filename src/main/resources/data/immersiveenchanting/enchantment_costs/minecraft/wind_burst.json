@@ -1,7 +1,0 @@
-{
-  "levels": {
-    "1": [{"item_cost": {"item": "minecraft:piston", "count": 1}}],
-    "2": [{"item_cost": {"item": "minecraft:wind_charge", "count": 1}}],
-    "3": [{"item_cost": {"item": "minecraft:shulker_shell", "count": 1}}]
-  }
-}
