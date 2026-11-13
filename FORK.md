@@ -68,6 +68,11 @@ A node locked by power says "Needs X bookshelf power (has Y)" instead of "Unknow
 A cost can set `fuel_count` to take that many of the level's fuel item instead of the enchanting_fuels amount
 (0 or left out keeps the old behaviour). Tier steps use it for their flat lapis cost. The tooltip shows it.
 
+## Enchanted book loot
+
+`enchantedBookLootMode` gains `KEEP`, which leaves vanilla enchanted books in loot as they are (what 5.x's
+`enableEnchantedBookLootTables = true` did; 6.0.1 only had `REPLACE` and `REMOVE`).
+
 ## Fixes
 
 - When a level had several cost alternatives, only the last one counted (the loop never stopped). Now the first

@@ -29,7 +29,9 @@ public class ServerConfig {
 
     public enum EnchantedBookLootMode {
         REPLACE,
-        REMOVE
+        REMOVE,
+        /** Fork: leave vanilla enchanted books in loot, like 5.x's enableEnchantedBookLootTables = true. */
+        KEEP
     }
 
     public final ForgeConfigSpec.EnumValue<EnchantedBookLootMode> ENCHANTED_BOOK_LOOT_MODE;
@@ -90,7 +92,8 @@ public class ServerConfig {
 
         builder.push("enchantedbooks");
         ENCHANTED_BOOK_LOOT_MODE = builder
-                .comment("Choose whether enchanted books should be removed completely or replaced with ancient books. Ancient books still spawn as normal.")
+                .comment("Choose whether enchanted books should be removed completely or replaced with ancient books. Ancient books still spawn as normal.",
+                        "KEEP leaves vanilla enchanted books in loot as they are.")
                 .translation("immersiveenchanting.config.enchanted_book_loot_mode")
                 .defineEnum("enchantedBookLootMode", EnchantedBookLootMode.REPLACE);
 
