@@ -1,7 +1,7 @@
 # Immersive Enchanting, 1.20.1 fork
 
 A fork of [Immersive Enchanting](https://github.com/alfiehanks/Immersive-Enchanting) 6.0.1 (branch `forge-1.20.1`) by
-alfino (alfiehanks), for Minecraft 1.20.1 (Forge 47.x). Version `6.0.1-fork.2`.
+alfino (alfiehanks), for Minecraft 1.20.1 (Forge 47.x). Version `6.0.1-fork.3`.
 Every change from the original is marked with a `fork` comment in the code.
 
 ## What's different from the original
@@ -13,6 +13,7 @@ Every change from the original is marked with a `fork` comment in the code.
 | Fuel per level | Always the `enchanting_fuels` item and amount for that level | A cost can set `fuel_count` for a different amount, or `fuel` for a different item or tag, e.g. dragon blood for the top tier ([details](#fuel-override)) |
 | AlfinoLib | Separate required mod | Built in, so one jar ([details](#alfinolib-built-in)) |
 | Enchanted books in loot | `REPLACE` (with Ancient Books) or `REMOVE` | Also `NOTHING`, which leaves them alone like 5.x could ([details](#enchanted-book-loot)) |
+| Enchanted books from villagers | Removed from every trade by default (`disableEnchantedBookTrades = true`) | Librarians sell them by default; the option still turns them off ([details](#enchanted-book-trades)) |
 | New worlds with an Ancient Library near spawn | Crash (AlfinoLib's data isn't loaded until after spawn generates) | Fixed ([details](#fixes)) |
 | Cost alternatives | Only the last alternative of a level was accepted | The first one the player can pay is used |
 | Removing an enchantment from an enchanted book | Didn't stick | Works |
@@ -106,6 +107,15 @@ into the fuel slot like lapis.
 `enchantedBookLootMode` gains `NOTHING`, which leaves vanilla enchanted books in loot as they are (what 5.x's
 `enableEnchantedBookLootTables = true` did; 6.0.1 only had `REPLACE` and `REMOVE`). Same as Kettle's upstream PR
 (alfiehanks/Immersive-Enchanting#96), so configs stay compatible if it's merged there.
+
+## Enchanted book trades
+
+`disableEnchantedBookTrades` defaults to `false`, so librarians (and any other villager) sell enchanted books like
+vanilla. The original defaults to `true`, which drops every trade whose result is an enchanted book when a villager
+gets new trades, so librarians only ever offered their other trades. Set it to `true` to get the original behaviour.
+It's a server config, so a world that already has `serverconfig/immersiveenchanting-server.toml` keeps the value
+written there. Trades a villager already has don't change either way; only trades it gets from then on (a new
+villager, or levelling up).
 
 ## Fixes
 

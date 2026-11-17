@@ -101,7 +101,7 @@ public class ServerConfig {
         DISABLE_ENCHANTED_BOOK_TRADES = builder
                 .comment("If enabled, vanilla enchanted books will not appear in villager trades.")
                 .translation("immersiveenchanting.config.disable_enchanted_book_trades")
-                .define("disableEnchantedBookTrades", true);
+                .define("disableEnchantedBookTrades", false); // fork: off by default, librarians keep selling enchanted books
     }
 
     public static boolean areAncientBooksRequired() {
