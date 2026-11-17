@@ -1,7 +1,7 @@
 {
   "itemGroup.immersiveenchanting.enchanting": "附魔",
   "block.immersiveenchanting.creative_bookshelf": "创造书架",
-  "item.immersiveenchanting.ancient_book": "远古之书",
+  "item.immersiveenchanting.ancient_book": "知识之书",
   "item.immersiveenchanting.music_disc_biblioclasm": "音乐唱片",
   "item.immersiveenchanting.music_disc_biblioclasm.desc": "Alfie - 焚书",
   "item.immersiveenchanting.music_disc_arcane_memories": "音乐唱片",
@@ -16,12 +16,12 @@
   "immersiveenchanting.tooltip.desc.enchanting_fuel": "燃料：",
   "immersiveenchanting.tooltip.desc.xp_levels": "经验等级：",
   "immersiveenchanting.tooltip.desc.equipped": "已装备。",
-  "immersiveenchanting.tooltip.desc.unavailable_enchantment": "未知",
+  "immersiveenchanting.tooltip.desc.unavailable_enchantment": "需要附近书架上的知识之书",
 
-  "immersiveenchanting.tooltip.desc.replicate": "复制一本此远古之书。",
-  "immersiveenchanting.tooltip.desc.transmute": "更改此远古之书的附魔。",
-  "immersiveenchanting.tooltip.desc.transmute_hint": "你必须先在书架上放入一本相同附魔的远古之书。",
-  "immersiveenchanting.tooltip.desc.not_transmutable": "已复制的远古之书无法被转化！",
+  "immersiveenchanting.tooltip.desc.replicate": "复制一本此知识之书。",
+  "immersiveenchanting.tooltip.desc.transmute": "更改此知识之书的附魔。",
+  "immersiveenchanting.tooltip.desc.transmute_hint": "你必须先在书架上放入一本相同附魔的知识之书。",
+  "immersiveenchanting.tooltip.desc.not_transmutable": "已复制的知识之书无法被转化！",
 
   "immersiveenchanting.tooltip.desc.cost_load_error": "enchantment_costs/%s.json 缺失或无效！",
   "immersiveenchanting.tooltip.desc.fuels_load_error": "enchantment_costs/immersiveenchanting/enchanting_fuels.json 缺失或无效！",
@@ -39,7 +39,7 @@
   "immersiveenchanting.tooltip.desc.accepts_any_tag": "可接受任意：%d",
   "immersiveenchanting.tooltip.desc.hold_to_remove_enchantment": "长按以移除",
   "immersiveenchanting.tooltip.desc.removing_enchantment": "正在移除……",
-  "immersiveenchanting.tab.book": "远古之书",
+  "immersiveenchanting.tab.book": "知识之书",
   "immersiveenchanting.tab.enchanting": "附魔",
 
   "immersiveenchanting.filter.unlocked": "显示已解锁",
@@ -54,7 +54,7 @@
   "immersiveenchanting.command.disabled_enchantments": "以下附魔已禁用或缺少附魔消耗文件：%s",
   "immersiveenchanting.command.enabled_enchantments": "以下附魔已启用：%s",
   "immersiveenchanting.command.generate_empty_datapack": "成功！点击以复制已生成的文件夹路径。",
-  "immersiveenchanting.command.give_random_ancient_book": "已向选中的玩家发放随机远古之书！",
+  "immersiveenchanting.command.give_random_ancient_book": "已向选中的玩家发放随机知识之书！",
   "immersiveenchanting.command.no_target": "未指定目标！",
 
   "immersiveenchanting.warn.invalid_cost_file": "以下附魔消耗文件无效：%s，详情请查看日志。",
@@ -64,21 +64,22 @@
 
   "immersiveenchanting.configuration.general": "通用",
   "immersiveenchanting.configuration.bookshelves": "书架搜索设置",
-  "immersiveenchanting.configuration.ancientbooks": "远古之书设置",
+  "immersiveenchanting.configuration.ancientbooks": "知识之书设置",
   "immersiveenchanting.configuration.enchantingtable": "附魔台设置",
   "immersiveenchanting.configuration.enchantedbooks": "原版附魔书设置",
 
-  "immersiveenchanting.config.disable_ancient_book_requirement": "关闭远古之书需求",
+  "immersiveenchanting.config.disable_ancient_book_requirement": "关闭知识之书需求",
   "immersiveenchanting.config.bookshelf_search_x": "书架搜索 X 轴半径",
   "immersiveenchanting.config.bookshelf_search_y": "书架搜索 Y 轴半径",
   "immersiveenchanting.config.bookshelf_search_z": "书架搜索 Z 轴半径",
   "immersiveenchanting.config.show_added_by_tooltip": "显示来源模组提示",
-  "immersiveenchanting.config.allow_transmute": "允许转化远古之书",
-  "immersiveenchanting.config.allow_replicate": "允许复制远古之书",
+  "immersiveenchanting.config.allow_transmute": "允许转化知识之书",
+  "immersiveenchanting.config.allow_replicate": "允许复制知识之书",
   "immersiveenchanting.config.allow_enchantment_removal": "允许移除附魔",
   "immersiveenchanting.config.item_carousel_speed": "物品轮播速度",
   "immersiveenchanting.config.play_node_hover_sounds": "播放节点悬停音效",
   "immersiveenchanting.config.enchanted_book_loot_mode": "附魔书战利品模式",
   "immersiveenchanting.config.obfuscate_locked_enchantments": "混淆未解锁附魔",
-  "immersiveenchanting.config.disable_enchanted_book_trades": "禁用村民附魔书交易"
+  "immersiveenchanting.config.disable_enchanted_book_trades": "禁用村民附魔书交易",
+  "immersiveenchanting.config.inject_tome_loot": "在战利品中加入知识之书"
 }

@@ -27,6 +27,9 @@ public class ServerConfig {
 
     public final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_ENCHANTED_BOOK_TRADES;
 
+    // fork: lets a pack turn off this mod's own Tome of Knowledge loot and hand them out another way
+    public final ForgeConfigSpec.ConfigValue<Boolean> INJECT_TOME_LOOT;
+
     public enum EnchantedBookLootMode {
         REPLACE,
         REMOVE,
@@ -86,14 +89,14 @@ public class ServerConfig {
                 .define("obfuscateLockedEnchantments", true);
 
         DISABLE_ANCIENT_BOOK_REQUIREMENT = builder
-                .comment("If enabled, Ancient Books are no longer required to unlock enchantments at the enchanting table. Enchantments still cost experience and materials as usual.")
+                .comment("If enabled, Tomes of Knowledge are no longer required to unlock enchantments at the enchanting table. Enchantments still cost experience and materials as usual.")
                 .translation("immersiveenchanting.config.disable_ancient_book_requirement")
                 .define("disableAncientBookRequirement", false);
         builder.pop();
 
         builder.push("enchantedbooks");
         ENCHANTED_BOOK_LOOT_MODE = builder
-                .comment("Choose whether enchanted books should be removed completely or replaced with ancient books. Ancient books still spawn as normal.",
+                .comment("Choose whether enchanted books should be removed completely or replaced with Tomes of Knowledge. Tomes of Knowledge still spawn as normal (see injectTomeLoot).",
                         "NOTHING leaves vanilla enchanted books in loot as they are.")
                 .translation("immersiveenchanting.config.enchanted_book_loot_mode")
                 .defineEnum("enchantedBookLootMode", EnchantedBookLootMode.REPLACE);
@@ -102,6 +105,12 @@ public class ServerConfig {
                 .comment("If enabled, vanilla enchanted books will not appear in villager trades.")
                 .translation("immersiveenchanting.config.disable_enchanted_book_trades")
                 .define("disableEnchantedBookTrades", false); // fork: off by default, librarians keep selling enchanted books
+
+        INJECT_TOME_LOOT = builder
+                .comment("If enabled, Tomes of Knowledge are added to chest and mob loot by this mod's loot modifiers.",
+                        "Turn off when a modpack or another mod hands out Tomes of Knowledge its own way.")
+                .translation("immersiveenchanting.config.inject_tome_loot")
+                .define("injectTomeLoot", true);
     }
 
     public static boolean areAncientBooksRequired() {
@@ -132,6 +141,11 @@ public class ServerConfig {
 
     public static boolean areEnchantedBookTradesDisabled() {
         return ServerConfig.CONFIG.DISABLE_ENCHANTED_BOOK_TRADES.get();
+    }
+
+    /** Fork: whether InjectAncientBookLootModifier should add Tomes of Knowledge to loot. */
+    public static boolean isTomeLootInjected() {
+        return ServerConfig.CONFIG.INJECT_TOME_LOOT.get();
     }
 
     public static boolean isObfuscateLockedEnchantments() {

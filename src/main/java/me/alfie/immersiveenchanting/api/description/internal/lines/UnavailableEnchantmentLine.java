@@ -2,7 +2,6 @@ package me.alfie.immersiveenchanting.api.description.internal.lines;
 
 import me.alfie.immersiveenchanting.alfinolib.gui.GuiGraphicsX;
 import me.alfie.immersiveenchanting.alfinolib.gui.util.MousePos;
-import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.api.description.DescriptionHelper;
 import me.alfie.immersiveenchanting.api.description.DescriptionLine;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.tooltip.NodeTooltip;
@@ -18,8 +17,8 @@ public record UnavailableEnchantmentLine(NodeTooltip tooltip) implements Descrip
 
     @Override
     public @NotNull Component getText() {
-        return ImmersiveEnchanting.styleWithAltFont(
-                Component.translatable("immersiveenchanting.tooltip.desc.unavailable_enchantment")
-                        .withStyle(ChatFormatting.GRAY));
+        // fork: plain font so players can read what they need (the enchantment's name stays hidden in the title)
+        return Component.translatable("immersiveenchanting.tooltip.desc.unavailable_enchantment")
+                .withStyle(ChatFormatting.GRAY);
     }
 }

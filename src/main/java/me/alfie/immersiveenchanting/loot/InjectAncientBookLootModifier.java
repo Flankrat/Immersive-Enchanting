@@ -81,6 +81,9 @@ public class InjectAncientBookLootModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
+        // fork: injectTomeLoot = false leaves the loot alone, for packs that give tomes out another way
+        if (!ServerConfig.isTomeLootInjected()) return generatedLoot;
+
         List<Holder<Enchantment>> enchantmentHolders = EnchantmentUtil.toHolders(enchantments, context.getLevel().registryAccess());
 
         int rolls = context.getRandom().nextIntBetweenInclusive(minRolls, maxRolls);
