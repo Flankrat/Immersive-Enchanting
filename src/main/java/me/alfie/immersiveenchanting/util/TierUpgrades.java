@@ -8,6 +8,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -24,7 +26,11 @@ import java.util.Set;
  *   <li>Level 1 of a tier enchantment can only be bought when the item has the previous tier at its max level
  *       (the highest level in the previous tier's cost file). Buying it replaces the previous tier.</li>
  *   <li>Its higher levels are bought like any other enchantment (each needs the level below).</li>
- *   <li>Tier enchantments need no Ancient Book: having the previous tier is what unlocks them.</li>
+ *   <li>Tier enchantments need their Tome of Knowledge on a nearby shelf, like every other enchantment.
+ *       Tiers in the {@code immersiveenchanting:no_tome} enchantment tag are the exception: no tome exists for
+ *       them, so having the previous tier is what unlocks them.</li>
+ *   <li>The tier's branch shows up once the item has the previous tier at any level, so its level 1 node can say
+ *       which level of the previous tier it still needs.</li>
  *   <li>Each tier needs more bookshelf power around the table ({@code bookshelfPowerPerTier} in the server config):
  *       tier 0 is every normal enchantment, tier 1 upgrades from a tier-0 one (Advanced), tier 2 from a tier-1 one
  *       (Supreme), and so on.</li>
@@ -32,6 +38,13 @@ import java.util.Set;
  * Used by the client (to build the tree) and the server (to check and apply), so both always agree.
  */
 public final class TierUpgrades {
+
+    /**
+     * Enchantments that never come as a Tome of Knowledge: tomes don't roll them (loot, structures, command), and
+     * tier upgrades in it are bought without one. Holds other mods' rune-style enchantments by default.
+     */
+    public static final TagKey<Enchantment> NO_TOME = TagKey.create(Registries.ENCHANTMENT,
+            new ResourceLocation(ImmersiveEnchanting.MODID, "no_tome"));
 
     /** Longest chain followed when working out a tier, so a broken datapack with a loop can't hang the game. */
     private static final int MAX_DEPTH = 8;
@@ -93,6 +106,36 @@ public final class TierUpgrades {
         others.remove(tier);
         if (previous != null) others.remove(previous);
         return EnchantmentHelper.isEnchantmentCompatible(others, tier);
+    }
+
+    /** Whether the enchantment is in the no_tome tag (looked up in the registry, so any holder for it works). */
+    public static boolean hasNoTome(Holder<Enchantment> enchantment, @Nullable RegistryAccess access) {
+        if(enchantment.is(NO_TOME)) return true;
+        if(access == null || enchantment.unwrapKey().isEmpty()) return false;
+        return access.registryOrThrow(Registries.ENCHANTMENT).getHolder(enchantment.unwrapKey().get())
+                .map(holder -> holder.is(NO_TOME)).orElse(false);
+    }
+
+    /**
+     * Whether buying this enchantment needs its Tome of Knowledge on a nearby shelf. True for everything except
+     * tier upgrades in the no_tome tag, which keep the old rule (the previous tier unlocks them).
+     */
+    public static boolean needsTome(CostRegistry registry, Holder<Enchantment> enchantment, RegistryAccess access) {
+        return !(isTier(registry, enchantment) && hasNoTome(enchantment, access));
+    }
+
+    /**
+     * The previous tier the item still has to bring to its max level before this tier's level 1 can be bought, or
+     * null when nothing is missing (not a tier, the item already has this tier, or the previous tier is maxed).
+     * Once the item has level 1, higher levels only need the level below, like any other enchantment.
+     */
+    public static @Nullable Holder<Enchantment> missingPreviousTier(CostRegistry registry, ItemStack stack,
+                                                                   Holder<Enchantment> tier, RegistryAccess access) {
+        if(!isTier(registry, tier)) return null;
+        if(EnchantmentUtil.getEnchantmentLevel(stack, tier) > 0) return null;
+        Holder<Enchantment> previous = previousTier(registry, tier, access);
+        if(previous == null) return null;
+        return previousTierMaxed(registry, stack, tier, access) ? null : previous;
     }
 
     /** Bookshelf power needed for an enchantment of this tier (the last configured value covers higher tiers). */

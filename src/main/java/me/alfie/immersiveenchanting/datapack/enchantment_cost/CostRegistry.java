@@ -6,6 +6,7 @@ import me.alfie.immersiveenchanting.alfinolib.networking.codec.StreamCodec;
 import me.alfie.immersiveenchanting.alfinolib.util.ResourceId;
 import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.codec.CostData;
+import me.alfie.immersiveenchanting.util.TierUpgrades;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -147,14 +148,15 @@ public class CostRegistry {
     }
 
     /**
-     * A random enabled enchantment for Ancient Books (loot, structures, command). Fork: tier upgrades are left out,
-     * since they're unlocked by the previous tier rather than by a book; if every enchantment is a tier, any is used.
+     * A random enabled enchantment for Tomes of Knowledge (loot, structures, command). Fork: tier upgrades are
+     * included (they need their tome too), enchantments in the {@code immersiveenchanting:no_tome} tag are left
+     * out; if every enchantment is in it, any is used.
      */
     public Holder<Enchantment> getRandomEnchantment(RandomSource randomSource) {
         List<Holder<Enchantment>> candidates = getAllEnabledEnchantmentHolders();
-        List<Holder<Enchantment>> normal = new ArrayList<>(candidates);
-        normal.removeIf(holder -> get(holder).isTier());
-        if(!normal.isEmpty()) candidates = normal;
+        List<Holder<Enchantment>> withTomes = new ArrayList<>(candidates);
+        withTomes.removeIf(holder -> holder.is(TierUpgrades.NO_TOME));
+        if(!withTomes.isEmpty()) candidates = withTomes;
         return candidates.get(randomSource.nextInt(candidates.size()));
     }
 }

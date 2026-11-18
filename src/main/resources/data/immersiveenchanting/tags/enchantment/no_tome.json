@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "jlme:piercing_capabilities",
+      "required": false
+    },
+    {
+      "id": "jlme:supreme_protection",
+      "required": false
+    },
+    {
+      "id": "jlme:arrow_piercing",
+      "required": false
+    },
+    {
+      "id": "jlme:lethal_cadence",
+      "required": false
+    },
+    {
+      "id": "jlme:critical_strike",
+      "required": false
+    },
+    {
+      "id": "jlme:harvester",
+      "required": false
+    },
+    {
+      "id": "jlme:supreme_thorns",
+      "required": false
+    }
+  ]
+}

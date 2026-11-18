@@ -17,6 +17,7 @@
   "immersiveenchanting.tooltip.desc.xp_levels": "经验等级：",
   "immersiveenchanting.tooltip.desc.equipped": "已装备。",
   "immersiveenchanting.tooltip.desc.unavailable_enchantment": "需要附近书架上的知识之书",
+  "immersiveenchanting.tooltip.desc.previous_tier": "需要物品上有%s或更高等级才能升级",
 
   "immersiveenchanting.tooltip.desc.replicate": "复制一本此知识之书。",
   "immersiveenchanting.tooltip.desc.transmute": "更改此知识之书的附魔。",

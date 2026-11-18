@@ -6,6 +6,7 @@ import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.CostRegistry;
 import me.alfie.immersiveenchanting.gui.EnchantingTableMenu;
 import me.alfie.immersiveenchanting.util.CostHelper;
+import me.alfie.immersiveenchanting.util.TierUpgrades;
 import me.alfie.immersiveenchanting.util.EnchantmentUtil;
 import me.alfie.immersiveenchanting.util.FxHelper;
 import net.minecraft.ChatFormatting;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,10 +56,12 @@ public record TransmutePacket() implements NetworkPacket<TransmutePacket> {
 
         ItemStack ancientBookStack = menu.getToolSlot().getItem();
         List<Holder<Enchantment>> availableEnchantments = menu.getAvailableEnchantments();
-        List<Holder<Enchantment>> allEnchantments = CostRegistry.server().getAllEnabledEnchantmentHolders();
+        List<Holder<Enchantment>> allEnchantments = new ArrayList<>(CostRegistry.server().getAllEnabledEnchantmentHolders());
 
         allEnchantments.removeIf(holder ->
                 availableEnchantments.stream().anyMatch(av -> av.value().equals(holder.value())));
+        // fork: never turn a tome into an enchantment that has no Tome of Knowledge (no_tome tag)
+        allEnchantments.removeIf(holder -> holder.is(TierUpgrades.NO_TOME));
         if(allEnchantments.isEmpty()) allEnchantments = CostRegistry.server().getAllEnabledEnchantmentHolders();
 
         RandomSource random = level.getRandom();

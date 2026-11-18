@@ -25,11 +25,13 @@ public class CostHelper {
             !CostRegistry.server().isRegistered(CostRegistry.ENCHANTING_FUELS)) return false;
         if(!CostRegistry.server().get(enchantmentHolder).enabled()) return false;
 
-        // fork: tier upgrades (Advanced/Supreme...) are unlocked by having the previous tier, not by an Ancient Book
+        // fork: every enchantment needs its Tome of Knowledge nearby, tier upgrades (Advanced/Supreme...) too;
+        // only tiers in the no_tome tag skip it (having the previous tier unlocks them)
         CostRegistry registry = CostRegistry.server();
         RegistryAccess access = player.level().registryAccess();
         boolean isTier = TierUpgrades.isTier(registry, enchantmentHolder);
-        if(!isTier && !isEnchantmentAvailableInBookshelves(enchantmentHolder, menu, player)) return false;
+        if(TierUpgrades.needsTome(registry, enchantmentHolder, access)
+                && !isEnchantmentAvailableInBookshelves(enchantmentHolder, menu, player)) return false;
 
         // fork: each tier needs more bookshelf power around the table
         int requiredPower = TierUpgrades.requiredBookshelfPower(TierUpgrades.tierIndex(registry, enchantmentHolder, access));

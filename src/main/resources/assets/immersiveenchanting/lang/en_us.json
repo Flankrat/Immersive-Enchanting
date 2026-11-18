@@ -17,6 +17,7 @@
   "immersiveenchanting.tooltip.desc.xp_levels": "Levels: ",
   "immersiveenchanting.tooltip.desc.equipped": "Equipped.",
   "immersiveenchanting.tooltip.desc.unavailable_enchantment": "Needs its Tome of Knowledge on a nearby shelf",
+  "immersiveenchanting.tooltip.desc.previous_tier": "Needs %s or higher on the item to upgrade",
   "immersiveenchanting.tooltip.desc.bookshelf_power": "Needs %s bookshelf power (has %s)",
   "immersiveenchanting.config.bookshelf_power_per_tier": "Bookshelf Power Per Tier",
   "immersiveenchanting.config.chiseled_bookshelf_power": "Chiseled Bookshelf Power",

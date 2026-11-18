@@ -6,7 +6,11 @@ import me.alfie.immersiveenchanting.ImmersiveEnchanting;
 import me.alfie.immersiveenchanting.api.node.ItemIcon;
 import me.alfie.immersiveenchanting.api.node.NodeIcon;
 import me.alfie.immersiveenchanting.api.node.SpriteIcon;
+import me.alfie.immersiveenchanting.api.node.internal.EnchantmentNodeData;
 import me.alfie.immersiveenchanting.config.ServerConfig;
+import me.alfie.immersiveenchanting.datapack.enchantment_cost.CostRegistry;
+import me.alfie.immersiveenchanting.gui.tab.enchanting.node.BranchFactory;
+import me.alfie.immersiveenchanting.util.EnchantmentUtil;
 import me.alfie.immersiveenchanting.gui.core.NineSliceSprite;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.node.Node;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.node.NodeState;
@@ -55,10 +59,21 @@ public class TooltipTitle extends TooltipComponent {
     private void setTitleText(Component component) {
         component = component.copy().withStyle(ChatFormatting.WHITE);
 
-        if(tooltip.node().isState(NodeState.LOCKED) && ServerConfig.isObfuscateLockedEnchantments())
+        if(tooltip.node().isState(NodeState.LOCKED) && ServerConfig.isObfuscateLockedEnchantments() && hidesName())
             component = ImmersiveEnchanting.styleWithAltFont(component);
 
         this.titleText = component;
+    }
+
+    /**
+     * Fork: a locked enchantment keeps its name hidden only while its Tome of Knowledge is missing. One that's only
+     * locked by its previous tier or by bookshelf power was already found, so its name shows.
+     */
+    private boolean hidesName() {
+        if(!tooltip.node().isDataType(EnchantmentNodeData.TYPE)) return true;
+        var access = tooltip.screen().registryAccess();
+        var holder = EnchantmentUtil.toHolder(tooltip.node().branchId(), access);
+        return BranchFactory.isMissingTome(tooltip.screen().getMenu(), CostRegistry.client(), holder, access);
     }
 
     /**

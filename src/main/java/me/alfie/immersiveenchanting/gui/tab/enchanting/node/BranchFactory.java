@@ -10,6 +10,7 @@ import me.alfie.immersiveenchanting.api.node.internal.ReplicateNodeData;
 import me.alfie.immersiveenchanting.api.node.internal.TransmuteNodeData;
 import me.alfie.immersiveenchanting.datapack.enchantment_cost.CostRegistry;
 import me.alfie.immersiveenchanting.datapack.mod_icons.ModIconsDatapack;
+import me.alfie.immersiveenchanting.gui.EnchantingTableMenu;
 import me.alfie.immersiveenchanting.gui.canvas.Canvas;
 import me.alfie.immersiveenchanting.gui.tab.enchanting.EnchantingTab;
 import me.alfie.immersiveenchanting.item.ModItems;
@@ -194,17 +195,25 @@ public class BranchFactory {
     }
 
     /**
-     * Fork: whether the enchantment can be bought at this table. Normal enchantments need an Ancient Book for them
-     * nearby (as before); tier upgrades don't (having the previous tier unlocks them). Both need enough bookshelf
-     * power for their tier. Must match {@code CostHelper.canEnchant} on the server.
+     * Fork: whether the enchantment can be bought at this table. Every enchantment needs its Tome of Knowledge
+     * nearby (tier upgrades too, unless they're in the no_tome tag) and enough bookshelf power for its tier. A tier
+     * upgrade the item doesn't have yet also needs the previous tier at its max level. Must match
+     * {@code CostHelper.canEnchant} on the server.
      */
     public static boolean isUnlocked(BuildBranchesEvent event, Holder<Enchantment> enchantmentHolder) {
         CostRegistry registry = event.costRegistry();
         RegistryAccess access = event.getCanvas().screen().registryAccess();
         var menu = event.getCanvas().screen().getMenu();
 
-        if(!TierUpgrades.isTier(registry, enchantmentHolder) && !menu.isEnchantmentAvailable(enchantmentHolder)) return false;
+        if(isMissingTome(menu, registry, enchantmentHolder, access)) return false;
+        if(TierUpgrades.missingPreviousTier(registry, event.getStack(), enchantmentHolder, access) != null) return false;
         return menu.getBookshelfPower() >= requiredBookshelfPower(registry, enchantmentHolder, access);
+    }
+
+    /** Fork: whether the enchantment needs a Tome of Knowledge that isn't on a shelf near the table (used by the tooltip too). */
+    public static boolean isMissingTome(EnchantingTableMenu menu, CostRegistry registry,
+                                        Holder<Enchantment> enchantmentHolder, RegistryAccess access) {
+        return TierUpgrades.needsTome(registry, enchantmentHolder, access) && !menu.isEnchantmentAvailable(enchantmentHolder);
     }
 
     /** Fork: the bookshelf power this enchantment's tier needs (used by the tooltip too). */
@@ -213,9 +222,10 @@ public class BranchFactory {
     }
 
     /**
-     * Fork: tier upgrades get their own branch only when the item already has them, or has the previous tier at its
-     * max level (and they'd fit with the other enchantments once the previous tier is replaced). Otherwise they're
-     * hidden, including on plain books, so Advanced and Supreme enchantments can't be bought from nothing.
+     * Fork: tier upgrades get their own branch only when the item already has them, or has the previous tier at any
+     * level (and they'd fit with the other enchantments once the previous tier is replaced). Until the previous tier
+     * is maxed the branch is locked and its tooltip says which level is needed. Otherwise they're hidden, including
+     * on plain books, so Advanced and Supreme enchantments can't be bought from nothing.
      * The normal compatibility filter usually drops them (the previous tier conflicts with them), so they're
      * checked here against the full enchantment list instead.
      */
@@ -239,11 +249,12 @@ public class BranchFactory {
 
             boolean hasIt = EnchantmentUtil.getEnchantmentLevel(stack, holder) > 0;
             Holder<Enchantment> previous = TierUpgrades.previousTier(registry, holder, access);
-            boolean canUpgrade = previous != null
-                    && TierUpgrades.previousTierMaxed(registry, stack, holder, access)
+            // shown (locked until maxed) as soon as the item has the previous tier, so players can see what's next
+            boolean hasPrevious = previous != null
+                    && EnchantmentUtil.getEnchantmentLevel(stack, previous) > 0
                     && TierUpgrades.compatibleAfterUpgrade(stack, holder.value(), previous.value());
 
-            if(hasIt || canUpgrade) result.add(holder);
+            if(hasIt || hasPrevious) result.add(holder);
         }
 
         // keep the original order (registry order) so branches don't jump around
